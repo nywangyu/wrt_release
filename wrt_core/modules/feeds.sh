@@ -15,7 +15,7 @@ update_feeds() {
 
     if ! grep -q "openwrt-nikki" "$FEEDS_PATH"; then
         [ -z "$(tail -c 1 "$FEEDS_PATH")" ] || echo "" >>"$FEEDS_PATH"
-        echo "src-git OpenWrt-nikki https://github.com/nikkinikki-org/OpenWrt-nikki;main" >>"$FEEDS_PATH"
+        echo "src-git openwrt-nikki https://github.com/nikkinikki-org/OpenWrt-nikki;main" >>"$FEEDS_PATH"
     fi
 
     if ! grep -q "openwrt_bandix" "$BUILD_DIR/$FEEDS_CONF"; then
