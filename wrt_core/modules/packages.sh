@@ -79,7 +79,7 @@ install_small8() {
 
 install_nikki() {
     echo "正在从官方仓库安装 luci-app-nikki..."
-    ./scripts/feeds install -p openwrt-nikki -f luci-app-nikki
+    ./scripts/feeds install -p nikki -f luci-app-nikki
 }
 
 install_fullconenat() {
