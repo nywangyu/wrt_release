@@ -13,9 +13,9 @@ update_feeds() {
         echo "src-git small8 https://github.com/kenzok8/jell;main" >>"$FEEDS_PATH"
     fi
 
-    if ! grep -q "openwrt-passwall" "$FEEDS_PATH"; then
+    if ! grep -q "openwrt-nikki" "$FEEDS_PATH"; then
         [ -z "$(tail -c 1 "$FEEDS_PATH")" ] || echo "" >>"$FEEDS_PATH"
-        echo "src-git passwall https://github.com/Openwrt-Passwall/openwrt-passwall;main" >>"$FEEDS_PATH"
+        echo "src-git OpenWrt-nikki https://github.com/nikkinikki-org/OpenWrt-nikki;main" >>"$FEEDS_PATH"
     fi
 
     if ! grep -q "openwrt_bandix" "$BUILD_DIR/$FEEDS_CONF"; then
