@@ -72,14 +72,14 @@ install_small8() {
         v2dat mosdns luci-app-mosdns \
         taskd luci-lib-xterm luci-lib-taskd luci-app-store quickstart \
         luci-app-quickstart netdata luci-app-netdata \
-        lucky luci-app-lucky luci-app-openclash luci-app-homeproxy luci-app-amlogic nikki luci-app-nikki \
+        lucky luci-app-lucky luci-app-openclash luci-app-homeproxy luci-app-amlogic \
         easytier luci-app-easytier \
         msd_lite luci-app-msd_lite cups luci-app-cupsd
 }
 
-install_passwall() {
-    echo "正在从官方仓库安装 luci-app-passwall..."
-    ./scripts/feeds install -p passwall -f luci-app-passwall
+install_nikki() {
+    echo "正在从官方仓库安装 luci-app-nikki..."
+    ./scripts/feeds install -p openwrt-nikki -f luci-app-nikki
 }
 
 install_fullconenat() {
