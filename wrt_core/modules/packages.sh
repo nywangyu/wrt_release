@@ -12,7 +12,7 @@ remove_unwanted_packages() {
         "mosdns" "adguardhome" "ddns-go" "naiveproxy" "shadowsocks-rust"
         "sing-box" "v2ray-core" "v2ray-geodata" "v2ray-plugin" "tuic-client"
         "chinadns-ng" "ipt2socks" "tcping" "trojan-plus" "simple-obfs" "shadowsocksr-libev"
-        "dae" "daed" "mihomo" "geoview" "tailscale" "open-app-filter" "msd_lite" "nikki"
+        "dae" "daed" "mihomo" "geoview" "tailscale" "open-app-filter" "msd_lite"
     )
     local packages_utils=(
         "cups"
@@ -48,10 +48,6 @@ remove_unwanted_packages() {
             \rm -rf ./feeds/small8/$pkg
         fi
     done
-
-    if [[ -d ./package/istore ]]; then
-        \rm -rf ./package/istore
-    fi
 
     if [ -d "$BUILD_DIR/target/linux/qualcommax/base-files/etc/uci-defaults" ]; then
         find "$BUILD_DIR/target/linux/qualcommax/base-files/etc/uci-defaults/" -type f -name "99*.sh" -exec rm -f {} +
