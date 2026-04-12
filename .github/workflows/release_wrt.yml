@@ -2,6 +2,9 @@ name: Release WRT
 run-name: Release - ${{ inputs.model }}
 
 on:
+  #自动编译：早上6点
+  schedule:
+    - cron: 0 22 */2 * *
   workflow_dispatch:
     inputs:
       model:
