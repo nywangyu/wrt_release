@@ -2,9 +2,6 @@ name: Release WRT
 run-name: Release - ${{ inputs.model }}
 
 on:
-  #自动编译：早上6点
-  schedule:
-    - cron: 0 22 */2 * *
   workflow_dispatch:
     inputs:
       model:
@@ -30,6 +27,10 @@ on:
           - zn_m2_immwrt
           - zn_m2_libwrt
           - x64_immwrt
+
+# 自动编译：早上6点
+  schedule:
+    - cron: 0 22 */2 * *
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
