@@ -294,7 +294,7 @@ update_diskman() {
     fi
 }
 
-# _sync_luci_lib_docker() {
+_sync_luci_lib_docker() {
     local lib_path="$BUILD_DIR/feeds/luci/libs/luci-lib-docker"
     local repo_url="https://github.com/lisaac/luci-lib-docker.git"
     
@@ -322,7 +322,7 @@ update_diskman() {
     fi
 }
 
-# update_dockerman() {
+update_dockerman() {
     local path="$BUILD_DIR/feeds/luci/applications/luci-app-dockerman"
     local repo_url="https://github.com/lisaac/luci-app-dockerman.git"
 
