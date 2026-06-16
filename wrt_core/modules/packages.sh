@@ -355,6 +355,14 @@ update_dockerman() {
         mv applications/luci-app-dockerman ../luci-app-dockerman || return
         cd .. || return
         \rm -rf dockerman
+        # 新增：固定修改 PKG_VERSION 为 0.5.26
+         local mk_file="${lib_path}/Makefile"
+         if [ -f "$mk_file" ]; then
+             echo "修正 luci-app-dockerman PKG_VERSION=0.5.26"
+             sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=0.5.26/' "$mk_file"
+         else
+             echo "警告：未找到 $mk_file，跳过版本修改" >&2
+         fi
         cd "$BUILD_DIR"
 
         if declare -F docker_stack_sync_dockerman_nftables_compat >/dev/null 2>&1; then
