@@ -317,6 +317,14 @@ _sync_luci_lib_docker() {
         mv collections/luci-lib-docker ../luci-lib-docker || return
         cd .. || return
         \rm -rf luci-lib-docker-tmp
+         # 新增：固定修改 PKG_VERSION 为 0.3.4
+         local mk_file="${lib_path}/Makefile"
+         if [ -f "$mk_file" ]; then
+             echo "修正 luci-lib-docker PKG_VERSION=0.3.4"
+             sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=0.3.4/' "$mk_file"
+         else
+             echo "警告：未找到 $mk_file，跳过版本修改" >&2
+         fi
         cd "$BUILD_DIR"
         echo "luci-lib-docker 同步完成"
     fi
