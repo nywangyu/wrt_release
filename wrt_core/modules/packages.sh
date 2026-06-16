@@ -355,13 +355,13 @@ update_dockerman() {
         mv applications/luci-app-dockerman ../luci-app-dockerman || return
         cd .. || return
         \rm -rf dockerman
-        # 新增：固定修改 PKG_VERSION 为 0.5.26
-         local mk_file="${lib_path}/Makefile"
-         if [ -f "$mk_file" ]; then
+        # 新增：强制修正 PKG_VERSION 为 0.5.26
+         local dockerman_mk="${path}/Makefile"
+         if [ -f "${dockerman_mk}" ]; then
              echo "修正 luci-app-dockerman PKG_VERSION=0.5.26"
-             sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=0.5.26/' "$mk_file"
+             sed -i 's/^PKG_VERSION:=.*/PKG_VERSION:=0.5.26/' "${dockerman_mk}"
          else
-             echo "警告：未找到 $mk_file，跳过版本修改" >&2
+             echo "警告：未找到 ${dockerman_mk}，跳过版本修改" >&2
          fi
         cd "$BUILD_DIR"
 
