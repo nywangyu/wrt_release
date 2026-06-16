@@ -144,7 +144,7 @@ _docker_stack_update_dockerd_git_ref() {
     if [[ "$major" =~ ^[0-9]+$ ]] && [ "$major" -ge 29 ]; then
         sed -i 's|^PKG_GIT_REF:=.*|PKG_GIT_REF:=docker-v$(PKG_VERSION)|g' "$mk_path"
     else
-        sed -i 's|^PKG_GIT_REF:=.*|PKG_GIT_REF:=v$(PKG_VERSION)|g' "$mk_path"
+        sed -i 's|^PKG_GIT_REF:=.*|PKG_GIT_REF:=$(PKG_VERSION)|g' "$mk_path"
     fi
 }
 
