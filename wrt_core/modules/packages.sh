@@ -1,59 +1,79 @@
 #!/usr/bin/env bash
 
 remove_unwanted_packages() {
-    local luci_packages=(
+    # 统一去重合并所有要删除的包名，避免重复遍历
+    local all_remove_pkgs=(
+        # luci插件
         "luci-app-passwall" "luci-app-ddns-go" "luci-app-rclone" "luci-app-ssr-plus"
-        "luci-app-vssr" "luci-app-daed" "luci-app-dae" "luci-app-alist" "luci-app-homeproxy"
+        "luci-app-vssr" "luci-app-daed" "luci-app-dae" "luci-app-alist"
         "luci-app-haproxy-tcp" "luci-app-openclash" "luci-app-mihomo" "luci-app-appfilter"
         "luci-app-msd_lite" "luci-app-unblockneteasemusic"
-    )
-    local packages_net=(
+        # 网络依赖
         "haproxy" "xray-core" "xray-plugin" "dns2socks" "alist" "hysteria"
         "mosdns" "adguardhome" "ddns-go" "naiveproxy" "shadowsocks-rust"
         "sing-box" "v2ray-core" "v2ray-geodata" "v2ray-plugin" "tuic-client"
         "chinadns-ng" "ipt2socks" "tcping" "trojan-plus" "simple-obfs" "shadowsocksr-libev"
         "dae" "daed" "mihomo" "geoview" "tailscale" "open-app-filter" "msd_lite"
-    )
-    local packages_utils=(
+        # 工具
         "cups"
+        # small8源
+        "ppp" "firewall" "daed-next" "libnftnl" "nftables" "dnsmasq"
+        "opkg" "smartdns" "luci-app-smartdns" "easytier"
     )
-    local small8_packages=(
-        "ppp" "firewall" "dae" "daed" "daed-next" "libnftnl" "nftables" "dnsmasq" "luci-app-alist"
-        "alist" "opkg" "smartdns" "luci-app-smartdns" "easytier"
-    )
 
-    for pkg in "${luci_packages[@]}"; do
-        if [[ -d ./feeds/luci/applications/$pkg ]]; then
-            \rm -rf ./feeds/luci/applications/$pkg
-        fi
-        if [[ -d ./feeds/luci/themes/$pkg ]]; then
-            \rm -rf ./feeds/luci/themes/$pkg
-        fi
-    done
+    echo "===== 开始清理不需要的软件包 ====="
 
-    for pkg in "${packages_net[@]}"; do
-        if [[ -d ./feeds/packages/net/$pkg ]]; then
-            \rm -rf ./feeds/packages/net/$pkg
+    # 1. 删除 luci 应用 & 主题
+    for pkg in "${all_remove_pkgs[@]}"; do
+        local luci_app_path="./feeds/luci/applications/$pkg"
+        local luci_theme_path="./feeds/luci/themes/$pkg"
+
+        if [[ -d "$luci_app_path" ]]; then
+            echo "删除LuCI应用: $luci_app_path"
+            rm -rf "$luci_app_path"
+        fi
+        if [[ -d "$luci_theme_path" ]]; then
+            echo "删除LuCI主题: $luci_theme_path"
+            rm -rf "$luci_theme_path"
         fi
     done
 
-    for pkg in "${packages_utils[@]}"; do
-        if [[ -d ./feeds/packages/utils/$pkg ]]; then
-            \rm -rf ./feeds/packages/utils/$pkg
+    # 2. 删除 packages/net 网络包
+    for pkg in "${all_remove_pkgs[@]}"; do
+        local net_pkg_path="./feeds/packages/net/$pkg"
+        if [[ -d "$net_pkg_path" ]]; then
+            echo "删除packages/net包: $net_pkg_path"
+            rm -rf "$net_pkg_path"
         fi
     done
 
-    for pkg in "${small8_packages[@]}"; do
-        if [[ -d ./feeds/small8/$pkg ]]; then
-            \rm -rf ./feeds/small8/$pkg
+    # 3. 删除 packages/utils 工具包
+    for pkg in "${all_remove_pkgs[@]}"; do
+        local util_pkg_path="./feeds/packages/utils/$pkg"
+        if [[ -d "$util_pkg_path" ]]; then
+            echo "删除packages/utils包: $util_pkg_path"
+            rm -rf "$util_pkg_path"
         fi
     done
 
-    if [ -d "$BUILD_DIR/target/linux/qualcommax/base-files/etc/uci-defaults" ]; then
-        find "$BUILD_DIR/target/linux/qualcommax/base-files/etc/uci-defaults/" -type f -name "99*.sh" -exec rm -f {} +
+    # 4. 删除 small8 源包
+    for pkg in "${all_remove_pkgs[@]}"; do
+        local small8_path="./feeds/small8/$pkg"
+        if [[ -d "$small8_path" ]]; then
+            echo "删除small8源包: $small8_path"
+            rm -rf "$small8_path"
+        fi
+    done
+
+    # 5. 清理 qualcommax 平台自定义uci-defaults脚本
+    local uci_defaults_dir="${BUILD_DIR}/target/linux/qualcommax/base-files/etc/uci-defaults"
+    if [[ -d "$uci_defaults_dir" ]]; then
+        echo "清理qualcommax平台99开头uci-defaults脚本"
+        find "$uci_defaults_dir" -maxdepth 1 -type f -name "99*.sh" -delete
     fi
-}
 
+    echo "===== 无用包清理完成 ====="
+}
 update_golang() {
     if [[ -d ./feeds/packages/lang/golang ]]; then
         echo "正在更新 golang 软件包..."
