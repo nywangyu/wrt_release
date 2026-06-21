@@ -90,8 +90,9 @@ install_small8() {
         naiveproxy shadowsocks-rust sing-box v2ray-core v2ray-geodata geoview v2ray-plugin \
         tuic-client chinadns-ng ipt2socks tcping trojan-plus simple-obfs shadowsocksr-libev \
         v2dat mosdns luci-app-mosdns \
-        taskd luci-lib-xterm luci-lib-taskd luci-app-store quickstart \
-        luci-app-quickstart netdata luci-app-netdata \
+        taskd luci-lib-xterm luci-lib-taskd luci-app-store \
+        luci-app-quickstart quickstart \
+        luci-theme-aurora luci-app-aurora-config \
         lucky luci-app-lucky luci-app-openclash luci-app-homeproxy luci-app-amlogic \
         easytier luci-app-easytier \
         msd_lite luci-app-msd_lite cups luci-app-cupsd
