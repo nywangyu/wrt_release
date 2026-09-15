@@ -8,7 +8,7 @@ on:
         required: true
         description: Device Model
         type: choice
-        default: jdcloud_ipq60xx_immwrt
+        default: jdcloud_ax6000_immwrt
         options:
           - aliyun_ap8220_immwrt
           - aliyun_ap8220_libwrt
@@ -151,7 +151,7 @@ jobs:
       - name: Delete Old Cache
         run: |
           # 获取缓存列表并删除
-          gh cache list --key ${{ matrix.os }}-${{ inputs.model }}-${{ hashFiles('**/repo_flag') }}- --json key --jq '.[] | .key' | while read -r key; do
+          gh cache list --key ${{ matrix.os }}-${{ inputs.model }}-${{ env.ADD_CONFIG_FRAGMENTS_KEY }}-${{ env.REMOVE_CONFIG_FRAGMENTS_KEY }}-${{ env.BUILD_DATE }}- --json key --jq '.[] | .key' | while read -r key; do
             gh cache delete "$key"
           done
           # 输出缓存状态
